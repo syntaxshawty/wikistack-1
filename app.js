@@ -4,20 +4,22 @@ const layout = require('./views/layout');
 const wikiRouter = require('./routes/wiki')
 const usersRouter = require('./routes/users')
 
-const app = express(); 
+const app = express();
 const { db, Page, User } = require('./models');
 const PORT = 3000;
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended:false}));
+app.use(express.json())
 
 app.use('/wiki', wikiRouter);
 //app.use('/user', usersRouter);
 
 app.get('/', (req,res,next) => {
     try {
-        res.send(layout());
+        res.redirect('/wiki')
+        //res.send(layout());
     }
     catch(error) {
         next(error);
